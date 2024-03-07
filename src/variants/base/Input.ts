@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const inputBoxVariant = cva(
-  "h-[40px] rounded-sm pl-3 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
+  "h-[40px] pl-3 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
   {
     variants: {
       variant: {

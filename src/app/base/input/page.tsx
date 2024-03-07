@@ -10,7 +10,7 @@ const Page = (props: Props) => {
     setInputText(value);
   };
   return (
-    <div>
+    <div className="flex justify-center items-center h-[100vh]">
       <Input
         inputText={inputText}
         setInputText={setterInputText}
