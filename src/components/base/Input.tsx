@@ -3,7 +3,7 @@ import React, { ChangeEvent, HTMLProps, forwardRef, useEffect, useState } from "
 import { VariantProps } from "class-variance-authority";
 import { cn } from "@/libs/utils";
 import { useDebounce } from "@/hooks/use-debounce";
-import { inputBoxVariant } from "@/variants/base/Input";
+import inputBoxVariant  from "@/variants/base/Input";
 
 
 interface Props<T>

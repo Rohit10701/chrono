@@ -1,6 +1,6 @@
 import { cva } from "class-variance-authority";
 
-const inputBoxVariant = cva(
+const buttonVariant = cva(
   "h-[40px] pl-3 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
   {
     variants: {
@@ -20,5 +20,4 @@ const inputBoxVariant = cva(
     },
   }
 );
-
-export default inputBoxVariant
+export default buttonVariant
