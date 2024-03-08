@@ -73,29 +73,6 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     };
   }, [fetchData, page, itemPerPage, hasMore, threshold]);
 
-  useEffect(() => {
-    const fetchDataFromApi = async () => {
-      try {
-        const response = await fetchData(page, itemPerPage);
-        console.log(response)
-        if (response && response.newContainer) {
-          const { newContainer, newPage, newHasMore } = response;
-          setPage(newPage);
-          setHasMore(newHasMore);
-          setContainerList((prevContainers) => [...prevContainers, ...newContainer]);
-        } else {
-          console.error("Invalid response format: missing newContainer property");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    if (page === initialPage) {
-      fetchDataFromApi();
-    }
-  }, [initialPage, fetchData, itemPerPage, page]);
-
   return (
     <div className="h-[400px] overflow-auto">
       {containerList.map((container, index) => renderContainer(container, index))}
