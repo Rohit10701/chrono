@@ -25,12 +25,12 @@ const Page = (props: Props) => {
   };
 
   return (
-    <div>
-      <h1>Infinite Scroll Example</h1>
+    <div className="flex justify-center items-center h-[100vh]">
       <InfiniteScroll
         fetchData={fetchData}
         renderContainer={renderContainer}
         initialPage={1}
+        className="border-2 border-gray-800"
         itemPerPage={10 }
         threshold={0.1}
       />

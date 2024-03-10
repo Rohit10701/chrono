@@ -21,6 +21,13 @@ const PillInput = (props: Props) => {
     }
   };
 
+  // const onBackSpace = () => {
+  //   if (texts.length < 1) {
+  //     return;
+  //   }
+  //   texts.pop();
+  //   setTexts(texts);
+  // };
   return (
     <div className="border-2 border-black bg-black flex w-96 rounded-md flex-wrap">
       <div className="bg-black max-w-full flex-wrap">
@@ -29,16 +36,16 @@ const PillInput = (props: Props) => {
             {text}
           </Pill>
         ))}
-        <div className="flex-shrink">
+        <div className="flex-shrink min-w-36">
           <KeyboardKey keyboardButton="Enter" onClick={handleSubmit}>
-            <Input
-              inputText={inputText}
-              setInputText={setterInputText}
-              placeholder="placeholder..."
-              className="border-none rounded-none"
-              delay={10}
-            />
-          </KeyboardKey>
+              <Input
+                inputText={inputText}
+                setInputText={setterInputText}
+                placeholder="placeholder..."
+                className="border-none rounded-none w-full"
+                delay={10}
+              />
+            </KeyboardKey>
         </div>
       </div>
     </div>

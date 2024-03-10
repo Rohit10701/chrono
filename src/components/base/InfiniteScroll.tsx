@@ -1,7 +1,28 @@
 "use client"
+import { cn } from "@/libs/utils";
+import { VariantProps, cva } from "class-variance-authority";
 import React, { useEffect, useRef, useState } from "react";
 
-interface InfiniteScrollProps {
+const infiniteScrollVariant = cva(
+  "h-[400px] px-3 py-3 m-1 inline-flex flex-col overflow-hidden rounded-sm text-sm font-medium overflow-auto",
+  {
+    variants: {
+      variant: {
+        dark: "bg-black text-white ",
+        white: "bg-white text-black",
+      },
+      size: {
+        sm: "w-96",
+        lg: "w-56",
+      },
+    },
+    defaultVariants: {
+      variant: "dark",
+      size: "lg",
+    },
+  }
+);
+interface InfiniteScrollProps extends VariantProps<typeof infiniteScrollVariant> {
   fetchData: (
     page: number,
     itemPerPage: number
@@ -10,6 +31,7 @@ interface InfiniteScrollProps {
   initialPage?: number;
   itemPerPage: number;
   threshold?: number;
+  className? : string;
 }
 
 const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
@@ -18,6 +40,9 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   initialPage = 1,
   itemPerPage,
   threshold = 0.1,
+  className = "",
+  variant,
+  size,
 }) => {
   const [containerList, setContainerList] = useState<any[]>([]);
   const [page, setPage] = useState(initialPage);
@@ -74,7 +99,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   }, [fetchData, page, itemPerPage, hasMore, threshold]);
 
   return (
-    <div className="h-[300px] overflow-auto">
+    <div className={cn(infiniteScrollVariant({variant, size}), className)}>
       {containerList.map((container, index) => renderContainer(container, index))}
       <div ref={lastContainerRef} style={{ height: "10px" }}>
       </div>
