@@ -74,7 +74,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   }, [fetchData, page, itemPerPage, hasMore, threshold]);
 
   return (
-    <div className="h-[400px] overflow-auto">
+    <div className="h-[300px] overflow-auto">
       {containerList.map((container, index) => renderContainer(container, index))}
       <div ref={lastContainerRef} style={{ height: "10px" }}>
       </div>
