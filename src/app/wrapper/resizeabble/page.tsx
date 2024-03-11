@@ -2,7 +2,7 @@ import ResizableWrapper from "@/components/wrappers/Resizabble";
 
 const Page = () => {
   return (
-    <div className="">
+    <div className="flex">
     <ResizableWrapper>
         <div className="bg-pink-300 w-full h-full">
           This is a resizable content!
