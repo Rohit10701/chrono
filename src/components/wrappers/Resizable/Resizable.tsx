@@ -23,7 +23,7 @@ const ResizableWrapper = ({children, side = "up"}: ResizableWrapperProps) => {
         minHeight : "50px"
       }}
     >
-      <div className="h-fit w-fit">
+      <div className="h-full w-full">
         {children}
       </div>
     </div>
