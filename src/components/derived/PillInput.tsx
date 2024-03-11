@@ -22,10 +22,12 @@ const PillInput = (props: Props) => {
   };
 
   const onBackSpace = () => {
-    if (texts.length > 0 && inputText == "" ) {
+    if (texts.length > 0 && inputText == "") {
+      console.log(texts, inputText)
       texts.pop();
+      console.log(texts)
       setTexts(texts);
-  }
+    }
   };
   return (
     <div className="border-2 border-black bg-black flex w-96 rounded-md flex-wrap">
@@ -35,8 +37,8 @@ const PillInput = (props: Props) => {
             {text}
           </Pill>
         ))}
-        <div className="min-w-24 w-auto">
-          <KeyboardKey keyboardButton="Backspcae" onClick={onBackSpace}>
+        <div className="w-fit">
+          <KeyboardKey keyboardButton="Backspace" onClick={onBackSpace}>
             <KeyboardKey keyboardButton="Enter" onClick={handleSubmit}>
               <Input
                 inputText={inputText}

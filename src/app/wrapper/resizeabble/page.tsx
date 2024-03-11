@@ -1,17 +1,19 @@
 import ResizableWrapper from "@/components/wrappers/Resizabble";
 
-interface MyComponentProps {
-  // ... other props
-}
-
-function MyComponent(props: MyComponentProps) {
-  const handleResize = (newSize: { width: number; height: number }) => {
-    console.log("New size:", newSize);
-  };
-
+const Page = () => {
   return (
-    <ResizableWrapper onResize={handleResize} style={{ backgroundColor: "lightblue" }}>
-      This is a resizable content!
+    <div className="">
+    <ResizableWrapper>
+        <div className="bg-pink-300 w-full h-full">
+          This is a resizable content!
+        </div>
     </ResizableWrapper>
+    <ResizableWrapper>
+        <div className="bg-blue-300 w-full h-full">
+          This is a resizable content!
+        </div>
+    </ResizableWrapper>
+    </div >
   );
-}
+};
+export default Page;

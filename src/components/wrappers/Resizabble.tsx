@@ -1,22 +1,33 @@
-"use client"
+"use client";
+import useHoverAndBorder from "@/hooks/use-hoverandborder";
 import useResizeable from "@/hooks/use-resizeabble";
-import React, { forwardRef, FC, MouseEvent } from "react";
+import React, { forwardRef, FC, MouseEvent, useRef } from "react";
 
 interface ResizableWrapperProps {
   children: React.ReactNode;
-  onResize?: (newSize: { width: number; height: number }) => void;
-  onBorder?: boolean;
-  style?: React.CSSProperties;
+  side? : "up" | "down" | "left" | "right"
 }
 
-const ResizableWrapper =
-  (props :  ResizableWrapperProps) => {
-
-    return (
-      <div  style={wrapperStyle} onMouseDown={e => handleResize}>
+const ResizableWrapper = ({children, side = "up"}: ResizableWrapperProps) => {
+  const divRefHoverAndBorder = useRef<HTMLDivElement>(null);
+  const { inside, onBorder } = useHoverAndBorder(divRefHoverAndBorder);
+  const { positionResizeable, draggingResizeable } = useResizeable(onBorder?.isOnRightBorder);
+  return (
+    <div
+      ref={divRefHoverAndBorder}
+      style={{
+        cursor: inside ? "" : "e-resize",
+        width: positionResizeable.x + "px",
+        height: positionResizeable.y + "px",
+        minWidth : "50px",
+        minHeight : "50px"
+      }}
+    >
+      <div className="h-full w-full">
         {children}
       </div>
-    );
-  }
+    </div>
+  );
+};
 
 export default ResizableWrapper;
