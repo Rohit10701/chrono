@@ -1,6 +1,6 @@
 "use client";
 import useHoverAndBorder from "@/hooks/use-hoverandborder";
-import useResizeable from "@/hooks/use-resizeabble";
+import useResizeable from "@/hooks/use-resizable";
 import React, { forwardRef, FC, MouseEvent, useRef } from "react";
 
 interface ResizableWrapperProps {
@@ -23,7 +23,7 @@ const ResizableWrapper = ({children, side = "up"}: ResizableWrapperProps) => {
         minHeight : "50px"
       }}
     >
-      <div className="h-full w-full">
+      <div className="h-fit w-fit">
         {children}
       </div>
     </div>
