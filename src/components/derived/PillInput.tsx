@@ -21,23 +21,23 @@ const PillInput = (props: Props) => {
     }
   };
 
-  // const onBackSpace = () => {
-  //   if (texts.length < 1) {
-  //     return;
-  //   }
-  //   texts.pop();
-  //   setTexts(texts);
-  // };
+  const onBackSpace = () => {
+    if (texts.length > 0 && inputText == "" ) {
+      texts.pop();
+      setTexts(texts);
+  }
+  };
   return (
     <div className="border-2 border-black bg-black flex w-96 rounded-md flex-wrap">
-      <div className="bg-black max-w-full flex-wrap">
+      <div className="bg-black flex w-auto flex-wrap">
         {texts.map((text, index) => (
           <Pill className="bg-zinc-800" key={index}>
             {text}
           </Pill>
         ))}
-        <div className="flex-shrink min-w-36">
-          <KeyboardKey keyboardButton="Enter" onClick={handleSubmit}>
+        <div className="min-w-24 w-auto">
+          <KeyboardKey keyboardButton="Backspcae" onClick={onBackSpace}>
+            <KeyboardKey keyboardButton="Enter" onClick={handleSubmit}>
               <Input
                 inputText={inputText}
                 setInputText={setterInputText}
@@ -46,6 +46,7 @@ const PillInput = (props: Props) => {
                 delay={10}
               />
             </KeyboardKey>
+          </KeyboardKey>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import KeyboardKey from "../wrappers/KeyboardKey";
 
 const inputBoxVariant = cva(
-  "h-[40px] pl-3 min-w-36 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
+  "h-[40px] pl-3 min-w-24 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
   {
     variants: {
       variant: {
@@ -36,7 +36,7 @@ interface Props<T>
     VariantProps<typeof inputBoxVariant> {
   inputText: T;
   setInputText: (value: T) => void;
-  delay? : number,
+  delay?: number;
 }
 
 const Input = ({
@@ -50,7 +50,10 @@ const Input = ({
 }: Props<string>) => {
   const [debouncedInput, setDebouncedInput] = useState("");
 
-  const debouncedText = useDebounce<string>({ value: debouncedInput, delay: delay });
+  const debouncedText = useDebounce<string>({
+    value: debouncedInput,
+    delay: delay,
+  });
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     const currentText = e.target.value;
     setDebouncedInput(currentText);
@@ -60,18 +63,17 @@ const Input = ({
   }, [setInputText, debouncedText]);
 
   const handleReset = () => {
-    setDebouncedInput("")
-  }
+    setDebouncedInput("");
+  };
   return (
     <>
       <KeyboardKey onClick={handleReset} keyboardButton="Enter">
-        
-      <input
-        onChange={handleTextChange}
-        className={cn(inputBoxVariant({ variant, size }), className)}
-        value={debouncedInput}
-        {...inputProps}
-      />
+        <input
+          onChange={handleTextChange}
+          className={cn(inputBoxVariant({ variant, size }), className)}
+          value={debouncedInput}
+          {...inputProps}
+        />
       </KeyboardKey>
     </>
   );
