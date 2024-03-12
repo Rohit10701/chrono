@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import { cn } from "@/libs/utils";
-import { VariantProps, cva } from "class-variance-authority";
+import { type VariantProps, cva } from "class-variance-authority";
 import React, { useEffect, useRef, useState } from "react";
 
 const infiniteScrollVariant = cva(
@@ -19,22 +19,23 @@ const infiniteScrollVariant = cva(
     defaultVariants: {
       variant: "dark",
       size: "lg",
-    },
+    },  
   }
 );
-interface InfiniteScrollProps extends VariantProps<typeof infiniteScrollVariant> {
+interface InfiniteScrollProps<T>
+  extends VariantProps<typeof infiniteScrollVariant> {
   fetchData: (
     page: number,
     itemPerPage: number
-  ) => Promise<{ newContainer: any[]; newPage: number; newHasMore: boolean }>;
-  renderContainer: (container: any, index: number) => React.ReactNode;
+  ) => Promise<{ newContainer: T[]; newPage: number; newHasMore: boolean }>;
+  renderContainer: (container: T, index: number) => React.ReactNode;
   initialPage?: number;
   itemPerPage: number;
   threshold?: number;
-  className? : string;
+  className?: string;
 }
 
-const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
+const InfiniteScroll: React.FC<InfiniteScrollProps<object>> = ({
   fetchData,
   renderContainer,
   initialPage = 1,
@@ -44,33 +45,35 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   variant,
   size,
 }) => {
-  const [containerList, setContainerList] = useState<any[]>([]);
+  const [containerList, setContainerList] = useState<object[]>([]);
   const [page, setPage] = useState(initialPage);
   const [hasMore, setHasMore] = useState(true);
 
   const lastContainerRef = useRef<HTMLDivElement>(null);
 
-
-  
-
   useEffect(() => {
     const fetchDataFromApi = async () => {
       try {
         const response = await fetchData(page, itemPerPage);
-        console.log(response)
-        if (response && response.newContainer) {
+        console.log(response);
+        if (response?.newContainer) {
           const { newContainer, newPage, newHasMore } = response;
           setPage(newPage);
           setHasMore(newHasMore);
-          setContainerList((prevContainers) => [...prevContainers, ...newContainer]);
+          setContainerList((prevContainers) => [
+            ...prevContainers,
+            ...newContainer,
+          ]);
         } else {
-          console.error("Invalid response format: missing newContainer property");
+          console.error(
+            "Invalid response format: missing newContainer property"
+          );
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    
+
     const options = {
       root: null,
       rootMargin: "0px",
@@ -80,11 +83,11 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
     const targetRef = lastContainerRef.current;
     const observer = new IntersectionObserver(async (entries) => {
       const first = entries[0];
-      if (!first.isIntersecting || !hasMore) {
+      if (!first?.isIntersecting || !hasMore) {
         return;
       }
 
-      fetchDataFromApi();
+      await fetchDataFromApi();
     }, options);
 
     if (targetRef) {
@@ -99,10 +102,11 @@ const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   }, [fetchData, page, itemPerPage, hasMore, threshold]);
 
   return (
-    <div className={cn(infiniteScrollVariant({variant, size}), className)}>
-      {containerList.map((container, index) => renderContainer(container, index))}
-      <div ref={lastContainerRef} style={{ height: "10px" }}>
-      </div>
+    <div className={cn(infiniteScrollVariant({ variant, size }), className)}>
+      {containerList.map((container, index) =>
+        renderContainer(container, index)
+      )}
+      <div ref={lastContainerRef} style={{ height: "10px" }}></div>
     </div>
   );
 };

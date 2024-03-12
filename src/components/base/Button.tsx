@@ -18,7 +18,7 @@ const buttonVariant = cva(
     },
     defaultVariants: {
       variant: "dark",
-      size: "lg",
+      size: "sm",
     },
   }
 );
