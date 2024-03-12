@@ -5,7 +5,7 @@ interface ResizableGroupProps {
 }
 const ResizableGroup = ({children}: ResizableGroupProps) => {
   return (
-    <div className='flex w-[80%]'>
+    <div className='flex nowrap h-[400px] w-[80%]'>
         {children}
     </div>
   )

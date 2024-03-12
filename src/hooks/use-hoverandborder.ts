@@ -41,7 +41,7 @@ const useHoverAndBorder = (
         const isOnRightBorder =
           mouseX > left + width - 10 && mouseX < left + width && mouseY > top && mouseY < bottom;
         const isOnBottomBorder =
-          mouseY > top + bottom - 10 && mouseY < top + bottom;
+          mouseY > top + bottom - 10 && mouseY < top + bottom && mouseX > left && mouseX < width;
 
         setIsInside(isInsideDiv);
         setIsOnBorder({

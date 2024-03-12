@@ -5,27 +5,40 @@ import React, { forwardRef, FC, MouseEvent, useRef } from "react";
 
 interface ResizableWrapperProps {
   children: React.ReactNode;
-  side? : "up" | "down" | "left" | "right"
+  side?: "horizantal" | "vertical";
 }
 
-const ResizableWrapper = ({children, side = "up"}: ResizableWrapperProps) => {
+const ResizableWrapper = ({
+  children,
+  side = "horizantal",
+}: ResizableWrapperProps) => {
   const divRefHoverAndBorder = useRef<HTMLDivElement>(null);
   const { inside, onBorder } = useHoverAndBorder(divRefHoverAndBorder);
-  const { positionResizeable, draggingResizeable } = useResizeable(onBorder?.isOnRightBorder);
+
+  let borderSide;
+  switch (side) {
+    case "vertical":
+      borderSide = onBorder?.isOnBottomBorder;
+      break;
+    case "horizantal":
+      borderSide = onBorder?.isOnRightBorder;
+      break;
+  }
+  const { positionResizeable, draggingResizeable } = useResizeable(
+    borderSide
+  );
   return (
     <div
       ref={divRefHoverAndBorder}
       style={{
-        cursor: inside ? "" : "e-resize",
-        width: positionResizeable.x + "px",
-        height: positionResizeable.y + "px",
-        minWidth : "50px",
-        minHeight : "50px"
+        cursor: inside ? "" : (side == "vertical" ? "n-resize" : "e-resize"),
+        width: side == "horizantal" ? positionResizeable.x + "px" : "100%",
+        height: side == "vertical" ? positionResizeable.y + "px" : "100%",
+        minWidth: "50px",
+        minHeight: "50px",
       }}
     >
-      <div className="h-full w-full">
-        {children}
-      </div>
+      <div className="h-full w-full">{children}</div>
     </div>
   );
 };
