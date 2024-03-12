@@ -12,6 +12,22 @@ interface SelectProps {
   onSelect: (value: string) => void;
   selectedValue: string;
 }
+interface SelectTriggerProps {
+  children: React.ReactNode;
+  onClickHandler?: () => void;
+}
+
+export const SelectTrigger: React.FC<SelectTriggerProps> = ({
+  children,
+  onClickHandler,
+}) => (
+  <div
+    className="w-64 h-10 flex justify-center items-center bg-black font-md text-white rounded-md  hover:cursor-pointer"
+    onClick={onClickHandler}
+  >
+    {children}
+  </div>
+);
 
 export const Select: React.FC<SelectProps> = ({
   children,
@@ -42,10 +58,12 @@ export const Select: React.FC<SelectProps> = ({
     <div className="relative" ref={dropdownRef}>
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child) && child.type === SelectTrigger) {
-          return React.cloneElement(child, {
-            onClick: toggleDropdown,
-            isOpen,
-          });
+          return React.cloneElement(
+            child as React.ReactElement<SelectTriggerProps>,
+            {
+              onClickHandler: toggleDropdown,
+            }
+          );
         }
         return child;
       })}
@@ -65,23 +83,6 @@ export const Select: React.FC<SelectProps> = ({
     </div>
   );
 };
-
-interface SelectTriggerProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-}
-
-export const SelectTrigger: React.FC<SelectTriggerProps> = ({
-  children,
-  onClick,
-}) => (
-  <div
-    className="w-64 h-10 flex justify-center items-center bg-black font-md text-white rounded-md  hover:cursor-pointer"
-    onClick={onClick}
-  >
-    {children}
-  </div>
-);
 
 interface SelectValueProps extends SelectHTMLAttributes<HTMLSelectElement> {
   selectedValue?: string;
