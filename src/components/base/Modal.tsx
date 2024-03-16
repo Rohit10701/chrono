@@ -1,6 +1,6 @@
 import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
-import Button from "../Button";
+import Button from "./Button";
 import { cn } from "@/libs/utils";
 import { MdClose } from "react-icons/md";
 const modalVariant = cva("relative bg-white p-8 rounded-lg overflow-auto", {
@@ -25,6 +25,7 @@ interface ModalProps extends VariantProps<typeof modalVariant> {
   onClose?: () => void;
   children?: React.ReactNode;
   className?: string;
+  href?: string;
 }
 const Modal = ({
   isOpen,
@@ -33,6 +34,7 @@ const Modal = ({
   className,
   variant,
   size,
+  href,
 }: ModalProps) => {
   if (!isOpen) return null;
 
@@ -41,18 +43,20 @@ const Modal = ({
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
       onClick={onClose}
     >
-      <div
-        className={cn(modalVariant({ variant, size }), className)}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Button
-          className="text-white absolute right-0 top-0 mt-[20px] mr-[20px] w-[36px] h-[36px] p-1"
-          onClick={onClose}
+      {
+        <div
+          className={cn(modalVariant({ variant, size }), className)}
+          onClick={(e) => e.stopPropagation()}
         >
-          <MdClose />
-        </Button>
-        {children}
-      </div>
+          {href ? (
+            <>
+              <iframe src={href} className="w-full h-full"/>
+            </>
+          ) : (
+            <>{children}</>
+          )}
+        </div>
+      }
     </div>
   );
 };
@@ -82,6 +86,6 @@ interface ModalContentProps {
   className?: string;
 }
 export const ModalContent = ({ children, className }: ModalContentProps) => {
-  return <div className={cn("flex m-10", className)}>{children}</div>;
+  return <div className={cn("m-10", className)}>{children}</div>;
 };
 export default Modal;
