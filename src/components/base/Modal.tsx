@@ -1,9 +1,7 @@
 import { type VariantProps, cva } from "class-variance-authority";
 import React from "react";
-import Button from "./Button";
 import { cn } from "@/libs/utils";
-import { MdClose } from "react-icons/md";
-const modalVariant = cva("relative bg-white p-8 rounded-lg overflow-auto", {
+const modalVariant = cva("relative bg-white p-8 rounded-lg", {
   variants: {
     variant: {
       dark: "bg-black text-white ",

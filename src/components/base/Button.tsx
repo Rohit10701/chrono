@@ -1,7 +1,7 @@
-"use client";
 import { cn } from "@/libs/utils";
 import { VariantProps, cva } from "class-variance-authority";
-import React, { ButtonHTMLAttributes } from "react";
+import React, { ButtonHTMLAttributes, forwardRef } from "react";
+
 const buttonVariant = cva(
   "h-[40px] pl-3 inline-flex items-center justify-center rounded-md text-sm font-medium focus:outline-none ",
   {
@@ -22,6 +22,7 @@ const buttonVariant = cva(
     },
   }
 );
+
 interface ButtonProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size">,
     VariantProps<typeof buttonVariant> {
@@ -29,22 +30,20 @@ interface ButtonProps
   className?: string;
 }
 
-const Button = ({
-  children = "Click",
-  variant,
-  size,
-  className,
-  ...buttonProps
-}: ButtonProps) => {
-  return (
-    <button
-      type="button"
-      className={cn(buttonVariant({ variant, size }), className)}
-      {...buttonProps}
-    >
-      {children}
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children = "Click", variant, size, className, ...buttonProps }, ref) => {
+    return (
+      <button
+        ref={ref}
+        type="button"
+        className={cn(buttonVariant({ variant, size }), className)}
+        {...buttonProps}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+Button.displayName = 'Button';
 
 export default Button;

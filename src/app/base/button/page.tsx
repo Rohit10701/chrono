@@ -1,14 +1,12 @@
 "use client"
 import Button from '@/components/base/Button'
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {}
 
 const Page = (props: Props) => {
-    const handleFun = () => {
-        console.log("clicked")
-    }
-  return (
+
+    return (
     <div className='flex justify-center items-center h-[100vh]'>
         <Button/>
     </div>

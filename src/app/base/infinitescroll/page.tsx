@@ -29,9 +29,7 @@ const Page = (props: Props) => {
       <InfiniteScroll
         fetchData={fetchData}
         renderContainer={renderContainer}
-        initialPage={1}
         className="border-2 border-gray-800"
-        itemPerPage={10 }
         threshold={0.1}
       />
     </div>
@@ -39,3 +37,5 @@ const Page = (props: Props) => {
 };
 
 export default Page;
+
+// https://adrianroselli.com/2014/05/so-you-think-you-built-good-infinite.html

@@ -14,17 +14,8 @@ const Page = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex justify-center items-center h-[100vh]">
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)} >
-        <ModalWrapper>
-          <ModalTitle>This is my modal title</ModalTitle>
-          <ModalContent className="flex flex-col">
-            {/* Some element like form input text anything */}
-            <Pill className="bg-pink-400 w-4"/>
-            <Pill className="bg-pink-400"/>
-            <Pill className="bg-pink-400"/>
-
-          </ModalContent>
-        </ModalWrapper>
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)} href="/base/infinitescroll">
+        hello world
       </Modal>
       <Button onClick={() => setIsOpen(!isOpen)} />
     </div>

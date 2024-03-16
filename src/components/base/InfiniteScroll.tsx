@@ -30,7 +30,7 @@ interface InfiniteScrollProps<T>
   ) => Promise<{ newContainer: T[]; newPage: number; newHasMore: boolean }>;
   renderContainer: (container: T, index: number) => React.ReactNode;
   initialPage?: number;
-  itemPerPage: number;
+  itemPerPage?: number;
   threshold?: number;
   className?: string;
 }
@@ -39,7 +39,7 @@ const InfiniteScroll: React.FC<InfiniteScrollProps<object>> = ({
   fetchData,
   renderContainer,
   initialPage = 1,
-  itemPerPage,
+  itemPerPage = 10,
   threshold = 0.1,
   className = "",
   variant,

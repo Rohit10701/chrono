@@ -31,7 +31,7 @@ const inputBoxVariant = cva(
     },
   }
 );
-interface Props<T>
+interface InputProps<T>
   extends Omit<HTMLProps<HTMLInputElement>, "size">,
     VariantProps<typeof inputBoxVariant> {
   inputText: T;
@@ -39,44 +39,51 @@ interface Props<T>
   delay?: number;
 }
 
-const Input = ({
-  inputText,
-  setInputText,
-  className,
-  variant,
-  size,
-  delay = 300,
-  ...inputProps
-}: Props<string>) => {
-  const [debouncedInput, setDebouncedInput] = useState("");
+const Input = forwardRef<HTMLInputElement, InputProps<string>>(
+  (
+    {
+      inputText,
+      setInputText,
+      className,
+      variant,
+      size,
+      delay = 300,
+      ...inputProps
+    },
+    ref
+  ) => {
+    const [debouncedInput, setDebouncedInput] = useState("");
 
-  const debouncedText = useDebounce<string>({
-    value: debouncedInput,
-    delay: delay,
-  });
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const currentText = e.target.value;
-    setDebouncedInput(currentText);
-  };
-  useEffect(() => {
-    setInputText(debouncedText);
-  }, [setInputText, debouncedText]);
+    const debouncedText = useDebounce<string>({
+      value: debouncedInput,
+      delay: delay,
+    });
+    const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const currentText = e.target.value;
+      setDebouncedInput(currentText);
+    };
+    useEffect(() => {
+      setInputText(debouncedText);
+    }, [setInputText, debouncedText]);
 
-  const handleReset = () => {
-    setDebouncedInput("");
-  };
-  return (
-    <>
-      <KeyboardKey onClick={handleReset} keyboardButton="Enter">
-        <input
-          onChange={handleTextChange}
-          className={cn(inputBoxVariant({ variant, size }), className)}
-          value={debouncedInput}
-          {...inputProps}
-        />
-      </KeyboardKey>
-    </>
-  );
-};
+    const handleReset = () => {
+      setDebouncedInput("");
+    };
+    return (
+      <>
+        <KeyboardKey onClick={handleReset} keyboardButton="Enter">
+          <input
+            ref={ref}
+            onChange={handleTextChange}
+            className={cn(inputBoxVariant({ variant, size }), className)}
+            value={debouncedInput}
+            {...inputProps}
+          />
+        </KeyboardKey>
+      </>
+    );
+  }
+);
 
+Input.displayName = "Input";
 export default Input;
